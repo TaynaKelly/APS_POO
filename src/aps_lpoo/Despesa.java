@@ -4,32 +4,24 @@ package aps_lpoo;
 public class Despesa {
 	String nome, descricao, tipo;
 	int grauClassificacao;
-	double valor, totalDespesa;
-		
+	double valor;
+	static double totalDespesa;
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
-	
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	public double getValor() {
-		return valor;
-	}
-	
-	public void setValor(float valor) {
-		this.valor = valor;
-	}
-	
 
 	public String getTipo() {
 		return tipo;
@@ -47,6 +39,22 @@ public class Despesa {
 		this.grauClassificacao = grauClassificacao;
 	}
 
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	public void setTotalDespesa(double totalDespesa) {
+		this.totalDespesa = totalDespesa;
+	}
+	
+	public static double getTotalDespesa() {
+		return totalDespesa;
+	}
+
 	public void informacoesDepesa() {
 		System.out.println("\nNome: " + this.nome);
 		System.out.println("Descrição: " + this.descricao);
@@ -56,10 +64,12 @@ public class Despesa {
 		
 	}
 	
-	public void somaDespesas() {
-		
-		
+	public void somaDespesas(double valor) {
+		totalDespesa += valor; 
 	}
+
+	
+
 	
 	
 }

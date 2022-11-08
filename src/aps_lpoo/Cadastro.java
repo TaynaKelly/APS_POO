@@ -73,6 +73,10 @@ public class Cadastro extends Exception {
 			}
 
 			d.informacoesDepesa();
+			
+			if(d.tipo == "FIXA" || d.grauClassificacao >= 4){
+				d.somaDespesas(d.valor);
+			}
 
 		} catch (Exception e) {
 			System.out.println("Dados inválidos, por favor, refaça o cadastro! ");
@@ -80,54 +84,60 @@ public class Cadastro extends Exception {
 
 	}
 	
+	public static void divisaoDespesas() throws Exception {
+		try {
+			double despesas = Despesa.getTotalDespesa();
+			int qtdPessoas = pessoas.size();
+			
+			double proporcional = despesas / qtdPessoas;
+			
+			System.out.println("O valor TOTAL das despesas é de R$" + despesas);
+			System.out.println("\nO valor PROPORCIONAL das despesas é de R$ " + proporcional);
+		} catch (Exception e) {
+			System.out.println("Não foi possivel calcular a divisão!");
+		}
+		
+	}
 
 	public static void cadastrarReserva() throws Exception {
-
-		System.out.print("Digite seu nome: ");
-		String nomeDigitado = scan.nextLine();
-		for (int i = 0; i < pessoas.size(); i++) {
-			if (nomeDigitado.equalsIgnoreCase(pessoas.get(i).getNome())) {
-				double valorReserva = pessoas.get(i).getRendimentos() * 0.05;
-				System.out.print("O valor proporcional da reserva a ser guardada é de R$ " + valorReserva
-						+ " Deseja confirmar? Digite 1 para SIM, 2 para NÃO ");
-				int confirmacao = Integer.parseInt(scan.nextLine());
-				switch (confirmacao) {
-				case 1: {
-					
-					gerarReserva(valorReserva,pessoas.get(i).getNome(), pessoas.get(i).getRendimentos());
-					
-
-					System.out.println("Reserva registrada com SUCESSO!.");
-					break;
-				}
-				case 2: {
-					System.out.println("Nao foi registrada nenhuma reserva.");
-					break;
-				}
-				default:
-					throw new Exception("Dados inválidos, tente novamente!");
-				}
-
-			}
-		}
-	}
-	
-
-	public static void gerarReserva(double valorReserva, String nomePessoa, double rendimentos) throws Exception {
 		try {
-			
-			Reserva r = new Reserva();
-			
-			r.nomePessoa = nomePessoa;
-			r.valor = valorReserva;
-			r.rendimentoPessoa = rendimentos ;
 
-			Reserva.gerarReserva(valorReserva);
-			reservas.add(r);
+			System.out.print("Digite seu nome: ");
+			String nomeDigitado = scan.nextLine();
+			for (int i = 0; i < pessoas.size(); i++) {
+				if (nomeDigitado.equalsIgnoreCase(pessoas.get(i).getNome())) {
+					double valorReserva = pessoas.get(i).getRendimentos() * 0.05;
+					System.out.print("O valor proporcional da reserva a ser guardada é de R$ " + valorReserva
+							+ " Deseja confirmar? Digite 1 para SIM, 2 para NÃO ");
+					int confirmacao = Integer.parseInt(scan.nextLine());
+					switch (confirmacao) {
+					case 1: {
+
+						Reserva r = new Reserva();
+
+						r.nomePessoa = pessoas.get(i).getNome();
+						r.valor = valorReserva;
+						r.rendimentoPessoa = pessoas.get(i).getRendimentos();
+
+						Reserva.gerarReserva(valorReserva);
+						reservas.add(r);
+
+						System.out.println("Reserva registrada com SUCESSO!.");
+						break;
+					}
+					case 2: {
+						System.out.println("Nao foi registrada nenhuma reserva.");
+						break;
+					}
+					default:
+						throw new Exception("Dados inválidos, tente novamente!");
+					}
+
+				}
+			}
 		} catch (Exception e) {
 			System.out.println("Erro ao guardar reserva");
 		}
-		
 	}
 
 	public static void relatorioPendencia() {

@@ -48,6 +48,7 @@ public class Principal {
 				break;
 			}
 			case 6: {
+				Cadastro.divisaoDespesas();
 				break;
 			}
 			case 7: {
